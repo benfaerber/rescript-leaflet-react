@@ -1,8 +1,3 @@
-/*
-<MapContainer center={[50.5, 30.5]} zoom={13}>
-  <MyComponent />
-</MapContainer>
-*/
 type coords = (float, float)
 
 // A struct that stores lat and lng used for internal apis
@@ -198,18 +193,3 @@ module VideoOverlay = {
     ~zIndex: option<int> = ?
   ) => React.element = "ImageOverlay"
 }
-
-type map = {
-  getCenter: unit => unit
-}
-
-@module("react-leaflet")
-external useMap: unit => map = "useMap"
-
-type mapEvents
-@module("react-leaflet")
-external useMapEvents: unit => mapEvents = "useMapEvents"
-
-type mapEvent
-@module("react-leaflet")
-external useMapEvent: unit => mapEvent = "useMapEvent"
