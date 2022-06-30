@@ -27,8 +27,8 @@ external useMap: unit => map = "useMap"
 
 type mapEvents
 @module("react-leaflet")
-external useMapEvents: unit => mapEvents = "useMapEvents"
+external useMapEvents: EventHandlers.t => mapEvents = "useMapEvents"
 
 type mapEvent
 @module("react-leaflet")
-external useMapEvent: unit => mapEvent = "useMapEvent"
+external useMapEvent: (string, 'a) => mapEvent = "useMapEvent"

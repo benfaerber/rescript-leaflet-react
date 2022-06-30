@@ -1,8 +1,5 @@
 type t
 
-type event
-type eventHandler = event => unit
-
 type resizeEvent
 type resizeEventHandler = resizeEvent => unit
 
@@ -17,6 +14,9 @@ type popupEventHandler = popupEvent => unit
 
 type tooltipEvent
 type tooltipEventHandler = tooltipEvent => unit
+
+type event
+type eventHandler = event => unit
 
 @obj
 external make: (

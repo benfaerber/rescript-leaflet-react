@@ -32,11 +32,46 @@ open RescriptLeafletReact
 
 let s = React.string
 
+module EventLogger = {
+  @react.component
+  let make = () => {
+    open LeafletHooks
+
+    let map = useMap()
+    let mapEvents = useMapEvents(EventHandlers.make(
+      ~click = (event) => {
+        Js.log("Mouse Click:")
+        Js.log(event)
+      },
+      ()
+    ))
+
+    let onSingleEvent = useMapEvent("drag", (pos) => {
+      Js.log("Drag Event:")
+      Js.log(pos)
+    })
+
+    Js.log("Center:")
+    Js.log(map.getCenter(.))
+    <></>
+  }
+}
+
 @react.component
 let make = () => {
   open LeafletReact
 
-  let clickHandler = (t) => Js.log(t)
+  let logMouseEvent = (t) => {
+    Js.log(t)
+  }
+
+  let logPopupEvent = (t) => {
+    Js.log(t)
+  }
+
+  let logDragEvent = (t) => {
+    Js.log(t)
+  }
 
   let bounds = create_bounds(
     (39.043705, -95.692240), (40.043705, -93.692240)
@@ -60,12 +95,16 @@ let make = () => {
         attribution={"&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors"}
         url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
       />
+      <EventLogger />
 
       <Marker
         position={(38.043705, -95.692240)}
-        eventHandlers={
-          click: clickHandler
-        }
+        eventHandlers={EventHandlers.make(
+          ~click = logMouseEvent,
+          ~popupopen = logPopupEvent,
+          ~drag = logDragEvent,
+          ()
+        )}
       >
         <Popup>
           {s("You clicked on the marker")}
@@ -102,6 +141,35 @@ let make = () => {
   </div>
 }
 ```
-
 This snippet of code generates this map:
 ![Example Map](docs/example.png)
+
+
+## Limitations:
+This is not a complete binding, if anyone wants to chip away at the library
+I would happily merge it in.
+
+Because of some weirdness with `this` binding and rescript's currying system, all the hook functions (getCenter, zoomIn, etc.) must be called in the uncurried way
+(using `func(. param)` notation)
+
+## Support
+Here is a basic list of what is supported right now:
+
+### Components
+- MapContainer
+- TileLayer
+- Market
+- Popup
+- Tooltip
+- Circle
+- Polyline
+- Polygon
+- Rectangle
+- Pane
+- ImageOverlay
+- VideoOverlay
+
+### Hooks
+- useMap
+- useMapEvents
+- useMapEvent
