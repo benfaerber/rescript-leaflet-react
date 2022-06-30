@@ -31,7 +31,7 @@ let controlPositionAsString = v =>
   }
 
 type point = (float, float)
-type leafletIcon = {
+type icon = {
   iconUrl: string,
   iconSize: option<point>,
   iconAnchor: option<point>,
@@ -39,10 +39,6 @@ type leafletIcon = {
   shadowUrl: option<string>,
   shadowSize: option<point>,
   shadowAnchor: option<point>
-}
-
-type leafletEventHandlers = {
-  click: Js.Dict.t<string> => unit
 }
 
 type geoJson
@@ -65,7 +61,7 @@ module TileLayer = {
   external make: (
     ~url: string,
     ~attribution: option<string> = ?,
-    ~eventHandlers: option<leafletEventHandlers> = ?,
+    ~eventHandlers: option<EventHandlers.t> = ?,
     ~opacity: option<float> = ?,
     ~zIndex: option<int> = ?
   ) => React.element = "TileLayer"
@@ -76,12 +72,12 @@ module Marker = {
   external make: (
     ~children: React.element,
     ~position: coords,
-    ~eventHandlers: option<leafletEventHandlers> = ?,
+    ~eventHandlers: option<EventHandlers.t> = ?,
     ~draggable: option<bool> = ?,
     ~opacity: option<float> = ?,
     ~pane: option<string> = ?,
     ~zIndexOffset: option<int> = ?,
-    ~icon: option<leafletIcon> = ?
+    ~icon: option<icon> = ?
   ) => React.element = "Marker"
 }
 
@@ -90,7 +86,7 @@ module Popup = {
   external make: (
     ~children: React.element,
     ~attribution: option<string> = ?,
-    ~eventHandlers: option<leafletEventHandlers> = ?,
+    ~eventHandlers: option<EventHandlers.t> = ?,
     ~pane: option<string> = ?,
     ~position: option<coords> = ?
   ) => React.element = "Popup"
@@ -101,7 +97,7 @@ module Tooltip = {
   external make: (
     ~children: React.element,
     ~attribution: option<string> = ?,
-    ~eventHandlers: option<leafletEventHandlers> = ?,
+    ~eventHandlers: option<EventHandlers.t> = ?,
     ~pane: option<string> = ?,
     ~position: option<coords> = ?
   ) => React.element = "Tooltip"
@@ -113,7 +109,7 @@ module Circle = {
     ~center: coords,
     ~radius: float,
     ~attribution: option<string> = ?,
-    ~eventHandlers: option<leafletEventHandlers> = ?,
+    ~eventHandlers: option<EventHandlers.t> = ?,
     ~pane: option<string> = ?,
     ~pathOptions: option<PathOptions.t> = ?
   ) => React.element = "Circle"
@@ -125,7 +121,7 @@ module Polyline = {
     ~children: option<React.element> = ?,
     ~positions: array<coords>,
     ~attribution: option<string> = ?,
-    ~eventHandlers: option<leafletEventHandlers> = ?,
+    ~eventHandlers: option<EventHandlers.t> = ?,
     ~pane: option<string> = ?,
     ~pathOptions: option<PathOptions.t> = ?
   ) => React.element = "Polyline"
@@ -137,7 +133,7 @@ module Polygon = {
     ~children: option<React.element> = ?,
     ~positions: array<coords>,
     ~attribution: option<string> = ?,
-    ~eventHandlers: option<leafletEventHandlers> = ?,
+    ~eventHandlers: option<EventHandlers.t> = ?,
     ~pane: option<string> = ?,
     ~pathOptions: option<PathOptions.t> = ?
   ) => React.element = "Polygon"
@@ -149,7 +145,7 @@ module Rectangle = {
     ~children: option<React.element> = ?,
     ~bounds: latLngBounds,
     ~attribution: option<string> = ?,
-    ~eventHandlers: option<leafletEventHandlers> = ?,
+    ~eventHandlers: option<EventHandlers.t> = ?,
     ~pane: option<string> = ?,
     ~pathOptions: option<PathOptions.t> = ?
   ) => React.element = "Rectangle"
@@ -161,7 +157,7 @@ module GeoJSON = {
     ~children: option<React.element> = ?,
     ~attribution: option<string> = ?,
     ~data: geoJson,
-    ~eventHandlers: option<leafletEventHandlers> = ?,
+    ~eventHandlers: option<EventHandlers.t> = ?,
     ~pane: option<string> = ?,
     ~style: option<PathOptions.t> = ?
   ) => React.element = "GeoJSON"
@@ -186,6 +182,7 @@ module ImageOverlay = {
     ~url: string,
     ~bounds: latLngBounds,
     ~opacity: option<float> = ?,
+    ~eventHandlers: option<EventHandlers.t> = ?,
     ~zIndex: option<int> = ?
   ) => React.element = "ImageOverlay"
 }
@@ -196,7 +193,7 @@ module VideoOverlay = {
     ~url: string,
     ~bounds: latLngBounds,
     ~attribution: option<string> = ?,
-    ~eventHandlers: option<leafletEventHandlers> = ?,
+    ~eventHandlers: option<EventHandlers.t> = ?,
     ~play: option<bool> = ?,
     ~zIndex: option<int> = ?
   ) => React.element = "ImageOverlay"
