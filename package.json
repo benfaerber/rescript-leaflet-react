@@ -1,0 +1,29 @@
+{
+  "name": "rescript-leaflet-react",
+  "version": "5.0.0",
+  "scripts": {
+    "build": "rescript build",
+    "start": "rescript build -w",
+    "clean": "rescript clean",
+    "watch": "bsb -make-world -w"
+  },
+  "keywords": [
+    "ReScript",
+    "React Leaflet",
+    "Leaflet"
+  ],
+  "author": "benfaerber",
+  "description": "Rescript bindings for React Leaflet",
+  "homepage": "https://github.com/benfaerber/rescript-leaflet-react",
+  "repository": "https://github.com/benfaerber/rescript-leaflet-react",
+  "bugs": "https://github.com/benfaerber/rescript-leaflet-react/issues",
+  "license": "MIT",
+  "devDependencies": {
+    "rescript": "9.1.4"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-leaflet": "^4.0.1"
+  }
+}
