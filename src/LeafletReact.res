@@ -103,6 +103,7 @@ module Circle = {
   external make: (
     ~center: coords,
     ~radius: float,
+    ~children: option<React.element> = ?,
     ~attribution: option<string> = ?,
     ~eventHandlers: option<EventHandlers.t> = ?,
     ~pane: option<string> = ?,
