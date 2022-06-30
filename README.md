@@ -1,5 +1,5 @@
-# Rescript React Simple Maps
-Rescript bindings for [React Simple Maps](https://github.com/zcreativelabs/react-simple-maps)
+# Rescript Leaflet React
+Rescript bindings for [React Leaflet JS](https://react-leaflet.js.org/)
 
 ## Getting Started
 I haven't published on NPM or Yarn yet but you can include it locally.
@@ -8,94 +8,97 @@ I haven't published on NPM or Yarn yet but you can include it locally.
 2. Add this to your `package.json`:
 ```json
 "dependencies": {
-    "rescript-react-simple-maps": "file:../rescript-react-simple-maps"
+    "rescript-leaflet-react": "file:../rescript-leaflet-react"
 }
 ```
 3. Add this to you `bsconfig.json`:
 ```json
 "bs-dependencies": [
     "@rescript/react",
-    "rescript-react-simple-maps"
+    "rescript-leaflet-react"
 ]
 ```
 4. Import into your Rescript project
 ```rescript
-open RescriptReactSimpleMaps
+open RescriptLeafletReact
 ```
 
-5. Access the `ReactSimpleMaps` module
+5. Access the `LeafletReact` module
 
 ## Example Usage
 
 ```rescript
-open RescriptReactSimpleMaps
+open RescriptLeafletReact
+
+let s = React.string
 
 @react.component
 let make = () => {
-  open ReactSimpleMaps
+  open LeafletReact
 
-  let displayPosition = (pos: position) => {
-    Js.log("Your position:")
-    Js.log(pos)
-  }
+  let clickHandler = (t) => Js.log(t)
+
+  let bounds = create_bounds(
+    (39.043705, -95.692240), (40.043705, -93.692240)
+  )
+
+  let pathOptions = PathOptions.make(
+    ~color="#00ff00",
+    ()
+  )
 
   <div>
-    <div className="map-container">
-      <ComposableMap>
-        <ZoomableGroup
-          center={(0., 0.)}
-          zoom={2.}
-          maxZoom={8.}
-          minZoom={1.}
-          onMoveStart={displayPosition}
-        >
-          <Graticule stroke="#F53" />
-          <Sphere stroke="#FF5533" strokeWidth={2.} />
-          {
-            geographyTestData
-            |> Array.map((geo) => {
-              <Geography
-                key={geo.rsmKey}
-                geography={geo}
-                fill={"#000000"}
-              />
-            })
-            |> React.array
-          }
+    <MapContainer
+      center={(39.043705, -95.692240)}
+      style={ReactDOM.Style.make(
+        ~height = "100vh",
+        ()
+      )}
+      zoom={3.}
+    >
+      <TileLayer
+        attribution={"&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors"}
+        url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
+      />
 
-          <Marker
-            coordinates={(-20.13992755570007, 0.6525543036691559)}
-          >
-            <circle r={"8"} fill="#ff0000" />
-          </Marker>
+      <Marker
+        position={(38.043705, -95.692240)}
+        eventHandlers={
+          click: clickHandler
+        }
+      >
+        <Popup>
+          {s("You clicked on the marker")}
+        </Popup>
+      </Marker>
 
-          <Line
-            coordinates={[
-              (-20.13992755570007, 0.6525543036691559),
-              (-10.13992755570007, 1.7325543036691559),
-              (-5.13992755570007, 6.925543036691559)
-            ]}
+      <Circle
+        center={(39.043705, -95.692240)}
+        radius={5000.}
+        pathOptions={pathOptions}
+      />
 
-            stroke="#ff0000"
-          />
+      <Polyline
+        positions={[
+          (39.043705, -95.692240),
+          (38.043705, -95.692240)
+        ]}
+      />
 
-          <Annotation
-            subject={(20.13992755570007, 20.6525543036691559)}
-            dx={-90.}
-            dy={-30.}
-            connectorProps={{
-              "stroke": "#FF5533",
-              "strokeWidth": 3,
-              "strokeLinecap": "round"
-            }}
-          >
-            <text x="-8" textAnchor="end" alignmentBaseline="middle" fill="#F53">
-              {React.string("Brazil")}
-            </text>
-          </Annotation>
-        </ZoomableGroup>
-      </ComposableMap>
-    </div>
+      <Polygon
+        positions={[
+          (40.043705, -93.692240),
+          (39.043705, -93.692240),
+          (39.043705, -92.692240),
+          (40.043705, -93.692240),
+        ]}
+      />
+
+      <ImageOverlay
+        url={"http://3.bp.blogspot.com/-rtiLKRi9zNY/UpdeBJ72Z9I/AAAAAAAAFFQ/qkG2I6fWpv0/s1600/dancing-pickle-like-dancing-banana-large-color-animated.gif"}
+        bounds={bounds}
+      />
+    </MapContainer>
   </div>
 }
 ```
