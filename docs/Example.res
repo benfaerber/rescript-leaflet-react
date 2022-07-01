@@ -1,29 +1,3 @@
-# Rescript Leaflet React &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/main/LICENSE) &middot; [![npm version](https://img.shields.io/npm/v/rescript-leaflet-react.svg?style=flat)](https://www.npmjs.com/package/rescript-leaflet-react)
-Rescript bindings for [React Leaflet JS](https://react-leaflet.js.org/)
-
-## Getting Started
-
-1. Install the package
-```json
-npm i rescript-leaflet-react
-```
-1. Add this to you `bsconfig.json`:
-```json
-"bs-dependencies": [
-    "@rescript/react",
-    "rescript-leaflet-react"
-]
-```
-1. Import into your Rescript project
-```rescript
-open RescriptLeafletReact
-```
-
-5. Access the `LeafletReact` module
-
-## Example Usage
-
-```rescript
 open RescriptLeafletReact
 
 let s = React.string
@@ -136,36 +110,3 @@ let make = () => {
     </MapContainer>
   </div>
 }
-```
-This snippet of code generates this map:
-![Example Map](docs/example.png)
-
-
-## Limitations:
-This is not a complete binding, if anyone wants to chip away at the library
-I would happily merge it in.
-
-Because of some weirdness with `this` binding and rescript's currying system, all the hook functions (getCenter, zoomIn, etc.) must be called in the uncurried way
-(using `func(. param)` notation)
-
-## Support
-Here is a basic list of what is supported right now:
-
-### Components
-- MapContainer
-- TileLayer
-- Market
-- Popup
-- Tooltip
-- Circle
-- Polyline
-- Polygon
-- Rectangle
-- Pane
-- ImageOverlay
-- VideoOverlay
-
-### Hooks
-- useMap
-- useMapEvents
-- useMapEvent
