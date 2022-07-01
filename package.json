@@ -1,6 +1,6 @@
 {
   "name": "rescript-leaflet-react",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "scripts": {
     "build": "rescript build",
     "start": "rescript build -w",
