@@ -4,7 +4,7 @@ Rescript bindings for [React Leaflet JS](https://react-leaflet.js.org/)
 ## Getting Started
 
 1. Install the package
-```json
+```
 npm i rescript-leaflet-react
 ```
 1. Add this to you `bsconfig.json`:
